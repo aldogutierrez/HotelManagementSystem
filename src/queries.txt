@@ -1,0 +1,19 @@
+select roomnumber, bednumber from room where reservestatus is false;
+select roomnumber, bednumber from room where roomnumber in
+	(select roomnumber from booking where checkoutdate < "2019-08-01");
+select sum(bednumber) as customers from room where reservestatus is true;	
+select avg(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());
+select max(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());	
+select min(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());	
+select avg(dailyprice) from prices where roomnumber in (select roomnumber from room where floorlocation =1);
+select count(*) as count from room where floorlocation = 1;
+select count(*) from (select * from room where reservestatus is false) as available;
+select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
+select roomnumber, penaltyfee from prices where roomnumber in (select roomnumber from room where floorlocation = 1);
+select (select dailyprice from prices where roomnumber = 101) * 10;	
+select (select dailyprice from prices where roomnumber = 102) * 8 + (select penaltyfee from prices where roomnumber = 102);	
+select roomnumber from room where bednumber > 1;
+select count(*) from room where bednumber = 1 and reservestatus is true;

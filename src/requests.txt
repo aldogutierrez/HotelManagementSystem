@@ -1,0 +1,15 @@
+Find all available rooms right now;
+Find all available rooms after certain date;
+Find how many customers in the hotel;
+Find the average age of customers in the hotel;
+Find oldest customer;
+Find youngest customer;
+find average price of the rooms on floor 1;
+How many rooms on the first floor?;
+How many available rooms on the second floor?;
+How many single rooms that are available on the first floor?;
+how much fee for check out late one date for each room in the first floor?;
+How much a customer pays when rent room 101 in 10 date?;
+How much a customer pays when rent room 202 in 8 dates but check out late 1 date?;
+Find rooms that have more than 1 bed;
+How many single rooms that are being booked?;
