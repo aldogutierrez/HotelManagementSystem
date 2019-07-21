@@ -3,7 +3,9 @@ SET PERSIST local_infile = 1;
 DROP DATABASE IF EXISTS HOTEL;
 CREATE DATABASE HOTEL;
 USE HOTEL;
-
+/*
+==================================== SQL RELATIONS ARE CREATED HERE ====================================
+*/
 DROP TABLE IF EXISTS USER;
 CREATE TABLE USER
 (
@@ -44,3 +46,27 @@ CREATE TABLE Prices
     penaltyFee INT,
     FOREIGN KEY (roomNumber) REFERENCES Room(roomNumber) ON DELETE CASCADE
 );
+
+/*
+==================================== SQL TRIGGERS ARE CREATED HERE =====================================
+*/
+
+CREATE TRIGGER CheckIn AFTER INSERT ON Booking
+FOR EACH ROW
+	UPDATE room 
+    SET reserveStatus = true 
+    WHERE roomNumber = new.roomNumber 
+    AND new.checkindate <= curdate() 
+    AND new.checkOutDate > curdate();
+
+CREATE TRIGGER CheckOut AFTER DELETE ON Booking
+FOR EACH ROW
+	UPDATE Room 
+    SET reserveStatus = false
+    WHERE roomNumber = old.roomNumber
+    AND old.checkOutDate <= curdate();
+
+/*
+=================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
+*/
+
