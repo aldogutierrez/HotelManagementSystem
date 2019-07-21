@@ -53,18 +53,18 @@ CREATE TABLE Prices
 
 CREATE TRIGGER CheckIn AFTER INSERT ON Booking
 FOR EACH ROW
-	UPDATE room 
+    UPDATE room 
     SET reserveStatus = true 
     WHERE roomNumber = new.roomNumber 
-    AND new.checkindate <= curdate() 
-    AND new.checkOutDate > curdate();
+    AND new.checkindate <= CURDATE() 
+    AND new.checkOutDate > CURDATE();
 
 CREATE TRIGGER CheckOut AFTER DELETE ON Booking
 FOR EACH ROW
-	UPDATE Room 
+    UPDATE Room
     SET reserveStatus = false
     WHERE roomNumber = old.roomNumber
-    AND old.checkOutDate <= curdate();
+    AND old.checkOutDate <= CURDATE();
 
 /*
 =================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
