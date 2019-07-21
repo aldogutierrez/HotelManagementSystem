@@ -1,0 +1,56 @@
+1)Find all available rooms right now
+
+	select roomnumber, bednumber from room where reservestatus is false;
+
+
+2)Find all available rooms after certain date
+
+	select roomnumber, bednumber from room where roomnumber in
+	(select roomnumber from booking where checkoutdate < "2019-08-01");
+
+
+3)Find how many customers in the hotel
+
+	select sum(bednumber) as customers from room where reservestatus is true;	
+
+4)Find the average age of customers in the hotel
+	select avg(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());
+
+5)Find oldest customer
+	select max(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());	
+
+6)Find youngest customer
+	select min(age) from user where uid in
+	(select uid from booking where checkoutdate > curdate());	
+
+
+
+7)find average price of the rooms on floor 1
+	select avg(dailyprice) from prices where roomnumber in (select roomnumber from room where floorlocation =1);
+
+
+8)How many rooms on the first floor?
+	select count(*) as count from room where floorlocation = 1;
+
+9)How many available rooms on the second floor?
+	select count(*) from (select * from room where reservestatus is false) as available;
+
+10)How many single rooms that are available on the first floor?
+	select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
+
+11)how much fee for check out late one date for each room in the first floor?
+	select roomnumber, penaltyfee from prices where roomnumber in (select roomnumber from room where floorlocation = 1);
+	
+12)How much a customer pays when rent room 101 in 10 date?
+	select (select dailyprice from prices where roomnumber = 101) * 10;	
+
+13)How much a customer pays when rent room 202 in 8 dates but check out late 1 date?
+	select (select dailyprice from prices where roomnumber = 102) * 8 + (select penaltyfee from prices where roomnumber = 102);	
+
+14)Find rooms that have more than 1 bed
+	select roomnumber from room where bednumber > 1;
+	
+15)How many single rooms that are being booked?
+	select count(*) from room where bednumber = 1 and reservestatus is true;
