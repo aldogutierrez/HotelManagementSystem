@@ -3,11 +3,8 @@
 	select roomnumber, bednumber from room where reservestatus is false;
 
 
-2)if a user is younger than 30 and has booked a room after 01/08/2019, cancel (delete) his/her booking
-
-	delete from booking where uid in (select uid from user where age < 30) and checkindate > "2019-08-01";
-
-
+2)How many single rooms that are available on the first floor?
+	select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
 
 
 3)Find how many customers in the hotel
@@ -38,8 +35,12 @@
 9)How many available rooms on the second floor?
 	select count(*) from (select * from room where reservestatus is false) as available;
 
-10)How many single rooms that are available on the first floor?
-	select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
+10)if a user is younger than 30 and has booked a room after 08/01/2019, cancel (delete) his/her booking
+
+	delete from booking where uid in (select uid from user where age < 30)
+		and checkindate > "2019-08-01";
+
+
 
 11)how much fee for check out late one date for each room in the first floor?
 	select roomnumber, penaltyfee from prices where roomnumber in (select roomnumber from room where floorlocation = 1);
@@ -57,8 +58,8 @@
 	select count(*) from room where bednumber = 1 and reservestatus is true;
 
 
-16) find rooms which has been booked at least 2 times
-	select roomnumber from room group by roomnumber having count(*) >= 2;
+16) find rooms which has been booked at least 1 time
+	select roomnumber from room group by roomnumber having count(*) >= 1;
 
 17) for every customer younger than 30 on the sendcond floor, increase their checkout date by one 
 	update booking set checkoutdate = date_add(checkoutdate, interval 1 day) where roomnumber >= 200
@@ -67,16 +68,9 @@
 18) find customers who book room on floor 1 and floor 2 order by their names
 	select uname from user where uid in (select uid from booking where roomnumber < 200)
 	union
-	select uname from user where uid in (select uid from booking where roomnumber >= 200 and roomnumber < 300) order by name;
+	select uname from user where uid in (select uid from booking where roomnumber >= 200 and roomnumber < 300) order by uname;
 
 19)  display customer's information and their booking details for those older than 30 . And for those younger than 30, display null
-	select * from user right outer join booking on age > 30 and booking.id = user.id;
+	select * from user right outer join booking on age > 30 and booking.uid = user.uid;
 
 
-create trigger checkin after insert on booking
-for each row
-	update room set reservestatus = true where roomnumber = new.roomnumber and new.checkindate <= curdate() and new.checkoutdate > curdate();
-
-create trigger checkout after delete on booking
-for each row
-	update room set reservestatus = false where roomnumber = old.roomnumber and old.checkoutdate <= curdate();
