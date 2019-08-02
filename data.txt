@@ -1,6 +1,6 @@
 insert into user(uname, age) values("Jason", 17);
 insert into user(uname, age) values("Jane", 17);
-insert into user(uname, age) values("Katherine", 33);
+insert into user(uname, age) values("Karen", 33);
 insert into user(uname, age) values("Smith", 24);
 insert into user(uname, age) values("Juanita", 23);
 insert into user(uname, age) values("Ethel", 33);
@@ -41,6 +41,9 @@ insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1006, 201
 insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1007, 202, "2019-07-20", "2019-08-01");
 insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1008, 203, "2019-07-21", "2019-07-26");
 insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1009, 204, "2019-07-19", "2019-07-26");
+
+insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1002, 104, "2019-09-19", "2019-09-29");
+insert into booking(uid, roomnumber, checkindate, checkoutdate) values(1004, 202, "2019-09-19", "2019-09-29");
 
 
 
