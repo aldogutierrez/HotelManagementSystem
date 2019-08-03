@@ -87,7 +87,6 @@ DROP PROCEDURE IF EXISTS archiveBooking;
 DELIMITER //
 CREATE PROCEDURE archiveBooking (IN cutOffDate DATE)
 BEGIN
-	DELETE FROM BookingArhive;
 	INSERT INTO BookingArchive (uID, roomNumber, checkInDate, checkOutDate)
 		SELECT uID, roomNumber, checkInDate, checkOutDate
         FROM Booking
