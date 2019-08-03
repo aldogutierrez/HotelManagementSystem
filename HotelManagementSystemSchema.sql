@@ -83,3 +83,14 @@ FOR EACH ROW
 =================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
 */
 
+DROP PROCEDURE IF EXISTS archiveBooking;
+DELIMITER //
+CREATE PROCEDURE archiveBooking (IN cutOffDate DATE)
+BEGIN
+	INSERT INTO BookingArchive (uID, roomNumber, checkInDate, checkOutDate)
+		SELECT uID, roomNumber, checkInDate, checkOutDate
+        FROM Booking
+        WHERE Booking.updateAt < cutOffDate;
+	DELETE FROM Booking WHERE Booking.updateAt < cutOffDate;
+	END //
+DELIMITER;
