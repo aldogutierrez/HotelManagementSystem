@@ -351,5 +351,6 @@ public class Hotel
 		}
 		
 		System.out.println("Program ended");
+		scan.close();
 	}
 }
