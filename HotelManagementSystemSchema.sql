@@ -33,6 +33,7 @@ CREATE TABLE Booking
     roomNumber INT,
     checkInDate DATE,
     checkOutDate DATE,
+    updateAt DATE,
     PRIMARY KEY (uID, roomNumber, checkInDate),
     FOREIGN KEY (uID) REFERENCES USER(uID) ON DELETE CASCADE,
     FOREIGN KEY (roomNumber) REFERENCES Room(roomNumber) ON DELETE CASCADE
@@ -44,6 +45,18 @@ CREATE TABLE Prices
     roomNumber INT,
     dailyPrice INT,
     penaltyFee INT,
+    FOREIGN KEY (roomNumber) REFERENCES Room(roomNumber) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS BookingArchive;
+CREATE TABLE BookingArchive
+(
+    uID INT,
+    roomNumber INT,
+    checkInDate DATE,
+    checkOutDate DATE,
+    PRIMARY KEY (uID, roomNumber, checkInDate),
+    FOREIGN KEY (uID) REFERENCES USER(uID) ON DELETE CASCADE,
     FOREIGN KEY (roomNumber) REFERENCES Room(roomNumber) ON DELETE CASCADE
 );
 
