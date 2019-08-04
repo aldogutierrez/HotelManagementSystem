@@ -33,18 +33,25 @@ insert into prices(roomnumber, dailyprice, penaltyfee) values(205, 220, 220);
 
 
 insert into booking(uid, roomnumber, checkindate, updateat, checkoutdate) values(1001, 101, "2019-07-18","2019-07-18" , "2019-07-25");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1002, 102, "2019-07-20", "2019-07-20", "2019-07-26");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1003, 103, "2019-07-22", "2019-07-22", "2019-08-10");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1004, 104, "2019-07-19", "2019-07-19","2019-07-24");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1005, 105, "2019-07-18", "2019-07-18","2019-08-07");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1006, 201, "2019-07-19", "2019-07-19","2019-08-08");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1007, 202, "2019-07-20", "2019-07-20","2019-08-01");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1008, 203, "2019-07-21", "2019-07-21","2019-07-26");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1009, 204, "2019-07-19", "2019-07-19","2019-07-26");
 
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1002, 104, "2019-09-19", "2019-08-01","2019-09-29");
+
 insert into booking(uid, roomnumber, checkindate, updateat,checkoutdate) values(1004, 202, "2019-09-19", "2019-08-01","2019-09-29");
-
-
 
 
