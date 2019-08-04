@@ -1,76 +1,82 @@
 1)Find all available rooms right now
 
-	select roomnumber, bednumber from room where reservestatus is false;
+	SELECT roomNumber, bedNumber FROM room WHERE reserveStatus IS false;
 
+2)How many single rooms are there available on the 1st floor?
+	
+	SELECT COUNT(*) FROM (SELECT * FROM room WHERE reserveStatus IS false AND bedNumber =1 AND floorLocation = 1) AS available;
 
-2)How many single rooms that are available on the first floor?
-	select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
+3)How many customers are in the hotel?
 
-
-3)Find how many customers in the hotel
-
-	select sum(bednumber) as customers from room where reservestatus is true;	
+	SELECT sum(bedNumber) AS Customers FROM room WHERE reserveStatus IS true;	
 
 4)Find the average age of customers in the hotel
-	select avg(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());
 
-5)Find oldest customer
-	select max(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());	
+	SELECT AVG(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());
 
-6)Find youngest customer
-	select min(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());	
+5)Find the oldest customer staying in the hotel right now
 
+	SELECT max(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());	
 
+6)Find the youngest customer staying IN the hotel right now;
 
-7)find average price of the rooms on floor 1
-	select avg(dailyprice) from prices where roomnumber in (select roomnumber from room where floorlocation =1);
+	SELECT mIN(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());	
 
+7)Find average price of the rooms on the 1st floor
 
-8)How many rooms on the first floor?
-	select count(*) as count from room where floorlocation = 1;
+	SELECT AVG(dailyPrice) FROM prices WHERE roomNumber IN (SELECT roomNumber FROM room WHERE floorLocation = 1);
 
-9)How many available rooms on the second floor?
-	select count(*) from (select * from room where reservestatus is false) as available;
+8)How many rooms are there on the 1st floor?;
 
-10)if a user is younger than 30 and has booked a room after 08/01/2019, cancel (delete) his/her booking
+	SELECT COUNT(*) AS COUNT FROM room WHERE floorLocation = 1;
 
-	delete from booking where uid in (select uid from user where age < 30)
-		and checkindate > "2019-08-01";
+9)How many available rooms are there on the 2nd floor?;
 
+	SELECT COUNT(*) FROM (SELECT * FROM room WHERE reserveStatus IS false) AS available;
 
+10)If a user is younger than 30, and has booked a room after 08/01/2019 --> Cancel (delete) his/her booking;
 
-11)how much fee for check out late one date for each room in the first floor?
-	select roomnumber, penaltyfee from prices where roomnumber in (select roomnumber from room where floorlocation = 1);
+	delete FROM Booking WHERE uID IN (SELECT uID FROM USER WHERE age < 30)
+		AND checkINdate > "2019-08-01";
+
+11)What is the fee for late check-out one day for each room on the 1st floor?;
+
+	SELECT roomNumber, penaltyFee FROM prices WHERE roomNumber IN (SELECT roomNumber FROM room WHERE floorLocation = 1);
 	
-12)How much a customer pays when rent room 101 in 10 date?
-	select (select dailyprice from prices where roomnumber = 101) * 10;	
+12)How much does a customer pay when they book Room #101 for 10 days?;
 
-13)How much a customer pays when rent room 202 in 8 dates but check out late 1 date?
-	select (select dailyprice from prices where roomnumber = 102) * 8 + (select penaltyfee from prices where roomnumber = 102);	
+	SELECT (SELECT dailyPrice FROM prices WHERE roomNumber = 101) * 10;	
 
-14)Find rooms that have more than 1 bed
-	select roomnumber from room where bednumber > 1;
+13)How much does a customer pay when they book Room #202 for 8 days AND late check-out 1 day?;
+
+	SELECT (SELECT dailyPrice FROM prices WHERE roomNumber = 102) * 8 + (SELECT penaltyFee FROM prices WHERE roomNumber = 102);	
+
+14)Which rooms have more than 1 bed?;
+
+	SELECT roomNumber FROM room WHERE bedNumber > 1;
 	
-15)How many single rooms that are being booked?
-	select count(*) from room where bednumber = 1 and reservestatus is true;
+15)How many single rooms are beINg booked?;
 
+	SELECT COUNT(*) FROM room WHERE bedNumber = 1 AND reserveStatus IS true;
 
-16) find rooms which has been booked at least 1 time
-	select roomnumber from room group by roomnumber having count(*) >= 1;
+16)Which rooms have been booked at least 1 time?;
 
-17) for every customer younger than 30 on the sendcond floor, increase their checkout date by one 
-	update booking set checkoutdate = date_add(checkoutdate, interval 1 day) where roomnumber >= 200
-		and uid in (select uid from user where age < 30);
+	SELECT roomNumber FROM room group by roomNumber havINg COUNT(*) >= 1;
 
-18) find customers who book room on floor 1 and floor 2 order by their names
-	select uname from user where uid in (select uid from booking where roomnumber < 200)
-	union
-	select uname from user where uid in (select uid from booking where roomnumber >= 200 and roomnumber < 300) order by uname;
+17)For every customer younger than 30 on the 2nd floor, increase their check-out date by one 
 
-19)  display customer's information and their booking details for those older than 30 . And for those younger than 30, display null
-	select * from user right outer join booking on age > 30 and booking.uid = user.uid;
+	UPDATE Booking set checkOutDate = date_add(checkOutDate, INterval 1 day) WHERE roomNumber >= 200
+		AND uID IN (SELECT uID FROM USER WHERE age < 30);
 
+18)Find customers who booked a room on floor 1 AND floor 2. Order by name;
 
+	SELECT uNAME FROM USER WHERE uID IN (SELECT uID FROM Booking WHERE roomNumber < 200)
+	UNION
+	SELECT uNAME FROM USER WHERE uID IN (SELECT uID FROM Booking WHERE roomNumber >= 200 AND roomNumber < 300) order by uNAME;
+
+19)For customers older than 30, display their information AND Booking details. While for those who are younger, display null
+
+	SELECT * FROM USER RIGHT OUTER JOIN Booking on age > 30 AND Booking.uID = USER.uID;

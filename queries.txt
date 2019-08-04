@@ -1,25 +1,25 @@
-select roomnumber, bednumber from room where reservestatus is false;
-select count(*) from (select * from room where reservestatus is false and bednumber =1 and floorlocation = 1) as available;
-select sum(bednumber) as customers from room where reservestatus is true;	
-select avg(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());
-select max(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());	
-select min(age) from user where uid in
-	(select uid from booking where checkoutdate > curdate());	
-select avg(dailyprice) from prices where roomnumber in (select roomnumber from room where floorlocation =1);
-select count(*) as count from room where floorlocation = 1;
-select count(*) from (select * from room where reservestatus is false) as available;
-delete from booking where uid in (select uid from user where age < 30) and checkindate > "2019-08-01";
-select roomnumber, penaltyfee from prices where roomnumber in (select roomnumber from room where floorlocation = 1);
-select (select dailyprice from prices where roomnumber = 101) * 10;	
-select (select dailyprice from prices where roomnumber = 102) * 8 + (select penaltyfee from prices where roomnumber = 102);	
-select roomnumber from room where bednumber > 1;
-select count(*) from room where bednumber = 1 and reservestatus is true;
-select roomnumber from room group by roomnumber having count(*) >= 1;
-update booking set checkoutdate = date_add(checkoutdate, interval 1 day) where roomnumber >= 200
-		and uid in (select uid from user where age < 30);
-select uname from user where uid in (select uid from booking where roomnumber < 200)
-	union
-	select uname from user where uid in (select uid from booking where roomnumber >= 200 and roomnumber < 300) order by uname;
-select * from user right outer join booking on age > 30 and booking.uid = user.uid;
+SELECT roomNumber, bedNumber FROM Room WHERE reserveStatus IS FALSE;
+SELECT COUNT(*) FROM (SELECT * FROM Room WHERE reserveStatus IS FALSE AND bedNumber = 1 AND floorLocation = 1) AS available;
+SELECT SUM(bedNumber) AS Customers FROM Room WHERE reserveStatus IS TRUE;	
+SELECT AVG(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());
+SELECT MAX(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());	
+SELECT MIN(age) FROM USER WHERE uID IN
+	(SELECT uID FROM Booking WHERE checkOutDate > CURDATE());	
+SELECT AVG(dailyPrice) FROM Prices WHERE roomNumber IN (SELECT roomNumber FROM Room WHERE floorLocation = 1);
+SELECT COUNT(*) AS COUNT FROM Room WHERE floorLocation = 1;
+SELECT COUNT(*) FROM (SELECT * FROM Room WHERE reserveStatus IS FALSE) AS available;
+DELETE FROM Booking WHERE uID IN (SELECT uID FROM USER WHERE age < 30) AND checkInDate > "2019-08-01";
+SELECT roomNumber, penaltyFee FROM Prices WHERE roomNumber IN (SELECT roomNumber FROM Room WHERE floorLocation = 1);
+SELECT (SELECT dailyPrice FROM Prices WHERE roomNumber = 101) * 10;	
+SELECT (SELECT dailyPrice FROM Prices WHERE roomNumber = 102) * 8 + (SELECT penaltyFee FROM Prices WHERE roomNumber = 102);	
+SELECT roomNumber FROM Room WHERE bedNumber > 1;
+SELECT COUNT(*) FROM Room WHERE bedNumber = 1 AND reserveStatus IS TRUE;
+SELECT roomNumber FROM Room GROUP BY roomNumber HAVING COUNT(*) >= 1;
+UPDATE Booking SET checkOutDate = date_add(checkOutDate, interval 1 day) WHERE roomNumber >= 200
+		AND uID IN (SELECT uID FROM USER WHERE age < 30);
+SELECT uNAME FROM USER WHERE uID IN (SELECT uID FROM Booking WHERE roomNumber < 200)
+	UNION
+	SELECT uNAME FROM USER WHERE uID IN (SELECT uID FROM Booking WHERE roomNumber >= 200 AND roomNumber < 300) ORDER BY uNAME;
+SELECT * FROM USER RIGHT OUTER JOIN Booking ON age > 30 AND Booking.uID = USER.uID;
