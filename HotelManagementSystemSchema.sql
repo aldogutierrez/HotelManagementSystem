@@ -64,20 +64,31 @@ CREATE TABLE BookingArchive
 ==================================== SQL TRIGGERS ARE CREATED HERE =====================================
 */
 
-CREATE TRIGGER CheckIn AFTER INSERT ON Booking
+DROP TRIGGER IF EXISTS Checkin;
+
+Delimiter $$
+CREATE TRIGGER CheckIn BEFORE INSERT ON Booking
 FOR EACH ROW
+BEGIN
+    SET new.updateat = ifnull(new.updateat,now());
+
     UPDATE room 
     SET reserveStatus = true 
     WHERE roomNumber = new.roomNumber 
     AND new.checkindate <= CURDATE() 
     AND new.checkOutDate > CURDATE();
+END;$$
+Delimiter ;
 
+DROP TRIGGER IF EXISTS Checkout;
 CREATE TRIGGER CheckOut AFTER DELETE ON Booking
 FOR EACH ROW
     UPDATE Room
     SET reserveStatus = false
     WHERE roomNumber = old.roomNumber
     AND old.checkOutDate <= CURDATE();
+    
+
 
 
 
