@@ -15,6 +15,8 @@ public class Hotel
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost/hotel";
+	
+	//static final String DB_URL = "jdbc:mysql://localhost/hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 	// Database credentials
 	static final String USER = "root";
@@ -26,7 +28,7 @@ public class Hotel
 	 * used for the requests and queries>
 	 * 
 	 * @param filename File to be read
-	 * @return Array containing resquests or queries
+	 * @return Array containing requests or queries
 	 * @throws IOException
 	 */
 	public static String[] read(String filename) throws IOException
@@ -134,7 +136,7 @@ public class Hotel
 	}
 
 	/**
-	 * Executes an udpate on the tables that
+	 * Executes an update on the tables that
 	 * contain a specific updating query that
 	 * is passed-in
 	 * 
@@ -223,15 +225,15 @@ public class Hotel
 	 * By default, in our options file
 	 * we have options for display and
 	 * at the disposal of the user
-	 * This funciton displays them in the console
+	 * This function displays them in the console
 	 * 
-	 * @param requests Array contating
+	 * @param requests Array containing
 	 * the requests for formatting and display
 	 */
 	public static void displayOption(String[] requests)
 	{
 		int count = 1;
-		System.out.println("Please choose one from these options: ");
+		System.out.println("Please choose one from these options: \n");
 		
 		for (String r : requests)
 		{
@@ -337,6 +339,10 @@ public class Hotel
 		String[] requests = read("requests.txt");
 		String[] queries = read("queries.txt");
 
+		System.out.println("\t\t\t\t\t\t============================");
+		System.out.println("\t\t\t\t\t\tWELCOME TO THE GRAND HOTEL");
+		System.out.println("\t\t\t\t\t\t============================");
+		
 		displayOption(requests);
 		System.out.println();
 		Scanner scan = new Scanner(System.in);
@@ -350,7 +356,7 @@ public class Hotel
 			System.out.println();
 		}
 		
-		System.out.println("Program ended");
+		System.out.println("Goodbye!");
 		scan.close();
 	}
 }
