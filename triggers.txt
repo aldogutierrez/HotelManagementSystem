@@ -1,7 +1,0 @@
-create trigger checkin after insert on booking
-for each row
-	update room set reservestatus = true where roomnumber = new.roomnumber and new.checkindate <= curdate() and new.checkoutdate > curdate();
-
-create trigger checkout after delete on booking
-for each row
-	update room set reservestatus = false where roomnumber = old.roomnumber and old.checkoutdate <= curdate();
