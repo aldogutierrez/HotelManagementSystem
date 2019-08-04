@@ -33,7 +33,7 @@ CREATE TABLE Booking
     roomNumber INT,
     checkInDate DATE,
     checkOutDate DATE,
-    updateAt DATE default curdate(),
+    updateAt date,
     PRIMARY KEY (uID, roomNumber, checkInDate),
     FOREIGN KEY (uID) REFERENCES USER(uID) ON DELETE CASCADE,
     FOREIGN KEY (roomNumber) REFERENCES Room(roomNumber) ON DELETE CASCADE
@@ -78,6 +78,8 @@ FOR EACH ROW
     SET reserveStatus = false
     WHERE roomNumber = old.roomNumber
     AND old.checkOutDate <= CURDATE();
+
+
 
 /*
 =================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
