@@ -65,19 +65,17 @@ CREATE TABLE BookingArchive
 */
 
 DROP TRIGGER IF EXISTS Checkin;
-
-Delimiter $$
+DELIMITER//
 CREATE TRIGGER CheckIn BEFORE INSERT ON Booking
 FOR EACH ROW
 BEGIN
     SET new.updateat = ifnull(new.updateat,now());
-
     UPDATE room 
     SET reserveStatus = true 
     WHERE roomNumber = new.roomNumber 
     AND new.checkindate <= CURDATE() 
     AND new.checkOutDate > CURDATE();
-END;$$
+END //
 Delimiter ;
 
 DROP TRIGGER IF EXISTS Checkout;
@@ -87,10 +85,6 @@ FOR EACH ROW
     SET reserveStatus = false
     WHERE roomNumber = old.roomNumber
     AND old.checkOutDate <= CURDATE();
-    
-
-
-
 
 /*
 =================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
@@ -105,5 +99,5 @@ BEGIN
         FROM Booking
         WHERE Booking.updateAt < cutOffDate;
 	DELETE FROM Booking WHERE Booking.updateAt < cutOffDate;
-	END //
-DELIMITER;
+END //
+DELIMITER ;
