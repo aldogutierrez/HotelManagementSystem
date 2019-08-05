@@ -79,12 +79,16 @@ END //
 Delimiter ;
 
 DROP TRIGGER IF EXISTS Checkout;
+DELIMITER//
 CREATE TRIGGER CheckOut AFTER DELETE ON Booking
 FOR EACH ROW
+BEGIN
     UPDATE Room
     SET reserveStatus = false
     WHERE roomNumber = old.roomNumber
     AND old.checkOutDate <= CURDATE();
+END //
+DELIMITER ;
 
 /*
 =================================== SQL STORED PROCEDURE IS CREATED HERE ===============================
