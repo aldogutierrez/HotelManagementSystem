@@ -105,3 +105,24 @@ BEGIN
     DELETE FROM Booking WHERE Booking.updateAt < cutOffDate;
 END //
 DELIMITER ;
+			      
+DROP PROCEDURE IF EXISTS getBookingByName;
+DELIMITER //
+CREATE PROCEDURE getBookingByName(IN CustomerName VARCHAR(50))
+BEGIN
+	SELECT *
+	FROM Bookings WHERE uID =
+		(SELECT uID FROM Customers c
+		WHERE c.name = CustomerName);
+ 	END//
+DELIMITER;
+
+DROP PROCEDURE IF EXISTS countAvailableRooms;
+DELIMITER //
+CREATE PROCEDURE countByAge(IN numberOfBeds INT, OUT totalAvailable INT) 
+BEGIN 
+	SELECT count(*)INTO totalAvailable 
+	FROM RoomTable 
+	WHERE Status == Available; 
+END// 
+DELIMITER; 
